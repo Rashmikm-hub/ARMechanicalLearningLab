@@ -8,6 +8,7 @@ public class GearLearningMode : MonoBehaviour
     public GameObject startButton;
     public GameObject previousButton;
     public GameObject nextButton;
+    public GearMotionDemo motionDemo;
 
     private int currentStep = 0;
 
@@ -104,6 +105,15 @@ public class GearLearningMode : MonoBehaviour
         if (currentStep == learningSteps.Length - 1)
         {
             learningText.text += "\n\nYou have completed the lesson!";
+        }
+        // Start gear demonstration at Step 4
+        if (currentStep == 3)
+        {
+            motionDemo.StartDemonstration();
+        }
+        else
+        {
+            motionDemo.StopDemonstration();
         }
     }
 }
