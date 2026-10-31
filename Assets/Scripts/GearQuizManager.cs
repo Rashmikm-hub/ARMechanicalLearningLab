@@ -5,13 +5,14 @@ using UnityEngine.UI;
 public class GearQuizManager : MonoBehaviour
 {
     public GameObject quizPanel;
+    public GameObject startQuizButton;
 
     public TMP_Text questionText;
     public TMP_Text feedbackText;
     public TMP_Text scoreText;
 
     public Button[] answerButtons;
-    public TMP_Text[] answerTexts;
+    
 
     public Button submitButton;
     public Button nextButton;
@@ -50,6 +51,10 @@ public class GearQuizManager : MonoBehaviour
 
     public void OpenQuiz()
     {
+        Debug.Log("QUIZ BUTTON CLICKED!");
+
+        startQuizButton.SetActive(false);
+
         quizPanel.SetActive(true);
         currentQuestion = 0;
         score = 0;
@@ -66,12 +71,17 @@ public class GearQuizManager : MonoBehaviour
             " of 5\n\n" + questions[currentQuestion];
 
         feedbackText.text = "";
-
         for (int i = 0; i < 3; i++)
-        {
-            answerTexts[i].text = answers[currentQuestion, i];
-            answerButtons[i].interactable = true;
-        }
+{
+    TMP_Text answerText = answerButtons[i].GetComponentInChildren<TMP_Text>();
+
+    answerText.text = answers[currentQuestion, i];
+
+    answerButtons[i].interactable = true;
+
+    // Reset button colour for the new question
+    answerButtons[i].image.color = Color.white;
+}
 
         submitButton.gameObject.SetActive(true);
         nextButton.gameObject.SetActive(false);
@@ -86,8 +96,19 @@ public class GearQuizManager : MonoBehaviour
 
         selectedAnswer = answerIndex;
 
-        feedbackText.text =
-            "Selected: " + answerTexts[answerIndex].text;
+        for (int i = 0; i < answerButtons.Length; i++)
+        {
+            answerButtons[i].interactable = true;
+            answerButtons[i].image.color = Color.white;
+        }
+
+        answerButtons[answerIndex].image.color =
+            new Color(0.4f, 0.8f, 1f);
+
+        TMP_Text answerText =
+            answerButtons[answerIndex].GetComponentInChildren<TMP_Text>();
+
+        feedbackText.text = "Selected: " + answerText.text;
     }
 
     public void SubmitAnswer()
