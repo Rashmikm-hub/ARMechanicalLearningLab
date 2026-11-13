@@ -23,14 +23,12 @@ public class GearHighlight : MonoBehaviour
     {
         for (int i = 0; i < gearRenderers.Length; i++)
         {
-            if (highlight)
+            if (gearRenderers[i] != null)
             {
-                gearRenderers[i].material.color = highlightColor;
-            }
-            else
-            {
-                gearRenderers[i].material.color = originalColors[i];
+                gearRenderers[i].material.color =
+                    highlight ? highlightColor : originalColors[i];
             }
         }
     }
 }
+
